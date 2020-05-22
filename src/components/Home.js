@@ -29,10 +29,11 @@ class Home extends Component {
     // metody dodawaj 
     removePost(id){
       //tworze zmienną title,  pobieram z tablicy posta z id, na koniec set state od mesage ustaw na tytuł
-      const title = this.state.posts.filter(kalafior => {
-        return kalafior.title !== id;
-
+      const filteredPost = this.state.posts.filter(kalafior => {
+        return kalafior.id === id;
       })
+
+      const title = filteredPost[0].title;
       
         // filtrujemy "stare" stany, szczypiorek = line newBuyItems
         const szczypiorek = this.state.posts.filter(marchewka => {
@@ -41,25 +42,22 @@ class Home extends Component {
 
         })
         
-        console.log('remove' + id)
-        console.log(title)
-        // message utawianie tu 
-        this.setState({
-          // robimy kopię starej tablicy posts
-          posts: [...title]
-      })
+        // console.log('remove' + id)
+        // console.log(filteredPost[0].title)
+        // console.log(typeof(filteredPost));
     
         this.setState({
             // robimy kopię starej tablicy posts
             posts: [...szczypiorek]
         })
         this.setState({
-          message: 'You have just remove the post'
+          message: `You have just remove the post`,
+          messageTitle: `${title}`
         })
         //after removing all items, all posts:
         if(szczypiorek.length === 0){
             this.setState({
-                message: 'You have removed all the posts. No posts on your list {title}'
+                message: 'You have removed all the posts. No posts on your list'
             })
         }
     }
@@ -115,10 +113,13 @@ class Home extends Component {
             <h4 className="center">Home</h4>
             <table>
               <tr>
-                  <th className="info left ">Information about posts:</th>
+                  <th className="info center ">Information about posts:</th>
               </tr>
               <tr>
-                      <td><p className="message left">Message: {this.state.message}</p></td>
+                      <td>
+                      <p className="message left">Message: {this.state.message}</p>
+                      <p className="message-title left">{this.state.messageTitle}</p>
+                      </td>
               </tr>
             </table>
             <AddPost nowanazwa={this.addPost}/>

@@ -100,6 +100,7 @@ code {
   -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
   box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
   transition: all 0.4s ease 0s;
+  cursor: pointer;
 
 }
 
@@ -166,11 +167,22 @@ table {
 .item1 {
   grid-column-start: 1;
   grid-column-end: 3;
-  /* grid-row-start: 1;
-  grid-row-end: 2; */
   object-fit: cover;
   width: 100%;
   max-height: 100%;
 
+
+}
+
+p{
+  display: block !important;
+}
+
+.left {
+  float: none !important;
+} 
+
+h3 {
+  margin-top: -50px;
 
 }
