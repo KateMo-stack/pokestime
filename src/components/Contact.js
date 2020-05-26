@@ -19,11 +19,14 @@ Modal.setAppElement("#root");
 //     });
 // }
 
-// const Contact= ()=> czy function Contact(){}  powinno być?
+// const Contact= ()=> czy function Contact(){}  powinno być?moze być, oba ok, z const lepiej
 const Contact = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [quote, setQuote] = useState(["aaa"]);
   const [quoteAuthor, setQuoteAuthor] = useState(["xxxx"]);
+  const [count, setCount] = useState(0);
+
+  // modal button na modalu handle klik
   // const quoteArray = [];
 
   // async function modalAxios() {
@@ -35,6 +38,44 @@ const Contact = () => {
   // }
 
   // useEffect wykorzytujemy w Hooks
+  //refresh dla quote, tworzę funkcję dla zmiany quote
+
+  // gdzie dać  setCount(0)?
+  const Increment = () => {
+    setCount(count + 1);
+  };
+
+  // console.log(Increment());
+
+  const Decrement = () => {
+    setCount(count - 1);
+  };
+
+  const Reset = () => {
+    setCount(0);
+  };
+
+  const OpenModal = () => {
+    setModalIsOpen(true);
+    fetchData();
+  };
+
+  // const OpenModal2 = () => {
+  //   setModalIsOpen(true);
+  // };
+
+  // pomocnicze: https://stackoverflow.com/questions/49153240/react-refreshing-save-counter
+  // https://www.freecodecamp.org/forum/t/react-write-a-simple-counter/168359
+  // https://wsvincent.com/react-counter/
+
+  const changeQuote = () => {
+    fetchData();
+  };
+  const resetCounter = () => {
+    setCount(0);
+  };
+
+  // api
 
   async function fetchData() {
     const res = await fetch("https://type.fit/api/quotes");
@@ -96,8 +137,24 @@ const Contact = () => {
         with desktop publishing software like Aldus PageMaker including versions
         of Lorem Ipsum.{" "}
       </p>
+
+      <button className="inc" onClick={() => Increment()}>
+        Increment
+      </button>
+      <button className="dec" onClick={() => Decrement()}>
+        Decrement
+      </button>
+      <button className="res" onClick={() => Reset()}>
+        Reset
+      </button>
+      <h2> Current Count: {count} </h2>
       {/* dodaję Modal */}
-      <button id="quoteButtonOpen" onClick={() => setModalIsOpen(true)}>
+      <button
+        id="quoteButtonOpen"
+        onClick={() => OpenModal()}
+        // onClick={() => setCount(count + 1)}
+      >
+        {/* funkcja  setModalIsOpen(true) + pobranie danych */}
         Check quote
       </button>
       <Modal
@@ -119,7 +176,17 @@ const Contact = () => {
         {/* <p>fetchData()</p> */}
         <div>
           <button id="quoteButtonClose" onClick={() => setModalIsOpen(false)}>
-            Close
+            Close with changing the quote
+          </button>
+          <button id="buttonChangeQuote" onClick={() => changeQuote()}>
+            Change quote
+          </button>
+          <p>Kliknięto {count} razy</p>
+          <button id="buttonClickedNumber" onClick={() => setCount(count + 1)}>
+            Click me
+          </button>
+          <button id="buttonClickedNumberReset" onClick={() => resetCounter()}>
+            Reset the counter
           </button>
         </div>
       </Modal>
