@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 // importuję react-modal
 import Modal from "react-modal";
+import ReactDOM from "react-dom";
 import axios from "axios";
+import MyModal from "./MyModal";
+import { Roller } from "react-awesome-spinners";
+// import Roller from "./Roller";
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+// import Loader from "react-loader-spinner";
+
+// zainstaluj:
+// npm i react-awesome-spinners
+// npm install styled-components --save
 
 // funkcjonalny komponent, bo nie używamy stanów
 
@@ -22,9 +32,13 @@ Modal.setAppElement("#root");
 // const Contact= ()=> czy function Contact(){}  powinno być?moze być, oba ok, z const lepiej
 const Contact = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  // w hookach mamy 2 stany: pierwszy z nich to zmienna, a drugi to funkcja jako modyfikator, czyli pamiętaj o () w np. komponencie MyModal
   const [quote, setQuote] = useState(["aaa"]);
   const [quoteAuthor, setQuoteAuthor] = useState(["xxxx"]);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  //mini komponent na modalu loader 3 sek jak klinkniesz przycisk
 
   // modal button na modalu handle klik
   // const quoteArray = [];
@@ -55,6 +69,9 @@ const Contact = () => {
     setCount(0);
   };
 
+  const Loader = () => {
+    setLoading(true);
+  };
   const OpenModal = () => {
     setModalIsOpen(true);
     fetchData();
@@ -137,8 +154,8 @@ const Contact = () => {
         with desktop publishing software like Aldus PageMaker including versions
         of Lorem Ipsum.{" "}
       </p>
-
       <button className="inc" onClick={() => Increment()}>
+        {/* <button className="inc" onClick={(() => Increment(), Loader())}> */}
         Increment
       </button>
       <button className="dec" onClick={() => Decrement()}>
@@ -149,6 +166,13 @@ const Contact = () => {
       </button>
       <h2> Current Count: {count} </h2>
       {/* dodaję Modal */}
+      {/* <Loader
+        type="Puff"
+        color="#00BFFF"
+        height={100}
+        width={100}
+        timeout={3000} //3 secs
+      /> */}
       <button
         id="quoteButtonOpen"
         onClick={() => OpenModal()}
@@ -157,39 +181,18 @@ const Contact = () => {
         {/* funkcja  setModalIsOpen(true) + pobranie danych */}
         Check quote
       </button>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        style={{
-          overlay: {
-            backgroundColor: "grey",
-          },
-          content: {
-            color: "orange",
-          },
-        }}
-      >
-        <h1>Quote of the day:</h1>
-        {/* <p>{JSON.stringify(modalIsOpen)}helloł</p> */}
-        <p>{quote} </p>
-        <p>{quoteAuthor}</p>
-        {/* <p>fetchData()</p> */}
-        <div>
-          <button id="quoteButtonClose" onClick={() => setModalIsOpen(false)}>
-            Close with changing the quote
-          </button>
-          <button id="buttonChangeQuote" onClick={() => changeQuote()}>
-            Change quote
-          </button>
-          <p>Kliknięto {count} razy</p>
-          <button id="buttonClickedNumber" onClick={() => setCount(count + 1)}>
-            Click me
-          </button>
-          <button id="buttonClickedNumberReset" onClick={() => resetCounter()}>
-            Reset the counter
-          </button>
-        </div>
-      </Modal>
+      <Roller />
+      <MyModal
+        // dziecko - rodzic aktualizacja
+        modalModalIsOpen={modalIsOpen}
+        modelSetModalIsOpen={setModalIsOpen}
+        modalQuote={quote}
+        modalQuoteAuthor={quoteAuthor}
+        modalChangeQuote={changeQuote}
+        modalCount={count}
+        modalSetCount={setCount}
+        modalResetCounter={resetCounter}
+      />
     </div>
   );
 };
