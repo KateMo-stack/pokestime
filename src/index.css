@@ -207,3 +207,10 @@ p {
 h3 {
   margin-top: -50px;
 }
+
+.gMCbcv {
+  /* display: inline-block; */
+  position: absolute !important;
+  width: 64px;
+  height: 64px;
+}

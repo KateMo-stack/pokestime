@@ -69,8 +69,12 @@ const Contact = () => {
     setCount(0);
   };
 
-  const Loader = () => {
+  const handleLoading = () => {
     setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      OpenModal();
+    }, 105000);
   };
   const OpenModal = () => {
     setModalIsOpen(true);
@@ -175,13 +179,17 @@ const Contact = () => {
       /> */}
       <button
         id="quoteButtonOpen"
-        onClick={() => OpenModal()}
+        // onClick={() => OpenModal()}
+        onClick={() => {
+          handleLoading();
+        }}
         // onClick={() => setCount(count + 1)}
       >
         {/* funkcja  setModalIsOpen(true) + pobranie danych */}
         Check quote
       </button>
-      <Roller />
+      {loading && <Roller />}
+
       <MyModal
         // dziecko - rodzic aktualizacja
         modalModalIsOpen={modalIsOpen}
